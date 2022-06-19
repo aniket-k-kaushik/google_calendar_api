@@ -1,12 +1,10 @@
-# frozen_string_literal: true
+class GoogleAuthorizationsController < ApplicationController
 
-class GoogleCalendarsController < ApplicationController
-  def index
-  end
-
-  def redirect_to_google_calendar_auth
-    client = Signet::OAuth2::Client.new(client_options)
-    redirect_to client.authorization_uri.to_s, allow_other_host: true
+  def redirect_from_google_calendar_auth
+    client.code = params[:code]
+    response = client.fetch_access_token!
+    current_user.update(google_authentication: response)
+    redirect_to root_path
   end
 
   private
@@ -22,4 +20,9 @@ class GoogleCalendarsController < ApplicationController
         redirect_uri: google_authorization_url
       }
     end
+
+    def client
+      @client ||= Signet::OAuth2::Client.new(client_options)
+    end
+
 end

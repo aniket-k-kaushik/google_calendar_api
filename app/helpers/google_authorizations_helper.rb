@@ -1,0 +1,2 @@
+module GoogleAuthorizationsHelper
+end

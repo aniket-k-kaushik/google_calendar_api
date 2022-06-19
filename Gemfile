@@ -59,6 +59,11 @@ gem "devise"
 # This gem provides jQuery and the jQuery-ujs driver [https://github.com/rails/jquery-rails]
 gem "jquery-rails"
 
+# Google API Client => Google Calender API [https://github.com/googleapis/google-api-ruby-client]
+gem "google-api-client", require: "google/apis/calendar_v3"
+
+gem "config"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
