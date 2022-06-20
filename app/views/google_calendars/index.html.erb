@@ -1,5 +1,5 @@
 <% if current_user.google_authentication.present? %>
-  <%#= link_to "Revoke Google calendar access", revoke_access_path %>
+  <%= link_to "Revoke Google calendar access", revoke_calendar_access_path %>
 <% else %>
   <%= link_to "Sync Google Calendar", redirect_to_google_calendar_auth_path %>
 <% end %>

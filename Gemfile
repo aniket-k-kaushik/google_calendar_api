@@ -65,8 +65,8 @@ gem "google-api-client", require: "google/apis/calendar_v3"
 gem "config"
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
   # For code formatting and linting [https://rubygems.org/gems/rubocop] [https://rubygems.org/gems/rubocop-rails]
   gem "rubocop"
