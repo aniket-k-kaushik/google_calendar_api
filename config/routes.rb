@@ -5,12 +5,14 @@ Rails.application.routes.draw do
   root "google_calendars#index"
 
   # Response from the google calender after authorization along with access and referesh token
-  get "auth/google_oauth2/callback/", to: "google_authorizations#redirect_from_google_calendar_auth", as: :google_authorization
+  get "auth/google_oauth2/callback/", to: "google_authorizations#redirect_from_google_calendar_auth",
+    as: :google_authorization
 
   # To send request to google calneder for authorizing the access request and to get access and referesh token.
   get "/redirect_to_google_calendar_auth", to: "google_calendars#redirect_to_google_calendar_auth"
 
-  get "revoke_google_calendar_access", to: "google_authorizations#revoke_google_calendar_access", as: :revoke_calendar_access
+  get "revoke_google_calendar_access", to: "google_authorizations#revoke_google_calendar_access",
+    as: :revoke_calendar_access
 
   get "/create_channel", to: "google_calendars#create_notification_channel"
   get "/stop_channel", to: "google_calendars#stop_notification_channel"

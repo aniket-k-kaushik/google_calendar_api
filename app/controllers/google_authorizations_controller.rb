@@ -1,5 +1,6 @@
-class GoogleAuthorizationsController < ApplicationController
+# frozen_string_literal: true
 
+class GoogleAuthorizationsController < ApplicationController
   def redirect_from_google_calendar_auth
     # Redirect from the google acces concent page with "code"
     client.code = params[:code]
@@ -15,8 +16,8 @@ class GoogleAuthorizationsController < ApplicationController
     uri.query = URI.encode_www_form(params)
     response = Net::HTTP.get(uri)
     result = JSON.parse(response)
-    if result['error'].present?
-      redirect_to root_path, notice: result['error']
+    if result["error"].present?
+      redirect_to root_path, notice: result["error"]
     else
       current_user.update(google_authentication: {})
       redirect_to root_path, notice: "Access Revoked Successfully"
@@ -37,7 +38,7 @@ class GoogleAuthorizationsController < ApplicationController
         token_credential_uri: "https://accounts.google.com/o/oauth2/token",
         scope: "https://www.googleapis.com/auth/calendar",
         redirect_uri: google_authorization_url,
-        refresh_token: current_user.google_authentication.dig('refresh_token')
+        refresh_token: current_user.google_authentication.dig("refresh_token")
       }
     end
 end

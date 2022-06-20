@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GoogleNotificationsController < ActionController::API
 
   def fetch_events
@@ -6,9 +8,10 @@ class GoogleNotificationsController < ActionController::API
 
   def callback
     return if user_id.blank?
+
     events = Google::Events.new(user_id: user_id).fetch
     create_events(events)
-    render json: {events: events}, status: 200
+    render json: { events: events }, status: 200
   end
 
   private
@@ -18,8 +21,9 @@ class GoogleNotificationsController < ActionController::API
     end
 
     def user_id
-      return if request_headers['HTTP_X_GOOG_CHANNEL_TOKEN'].blank?
-      JSON.parse(request_headers['HTTP_X_GOOG_CHANNEL_TOKEN'])&.dig('user_id')
+      return if request_headers["HTTP_X_GOOG_CHANNEL_TOKEN"].blank?
+
+      JSON.parse(request_headers["HTTP_X_GOOG_CHANNEL_TOKEN"])&.dig("user_id")
     end
 
     def create_events(events)
@@ -27,15 +31,16 @@ class GoogleNotificationsController < ActionController::API
     end
 
     def create_event(event)
-      session = user.events.find_or_create_by(google_event_id: event&.id)
-      if event.status == 'cancelled'
-        session.destroy
+      new_event = user.events.find_or_create_by(google_event_id: event&.id)
+      if event.status == "cancelled"
+        new_event.destroy
       else
-        session.update!(name: event&.summary,
-                        start_time: event&.start&.date_time,
-                        end_time: event&.end&.date_time,
-                        attendees: event&.attendees&.map(&:email),
-                        status: event.status)
+        new_event.update!(
+          name: event&.summary,
+          start_time: event&.start&.date_time,
+          end_time: event&.end&.date_time,
+          attendees: event&.attendees&.map(&:email),
+          status: event.status)
       end
     end
 

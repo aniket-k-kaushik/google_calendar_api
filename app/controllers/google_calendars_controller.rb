@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class GoogleCalendarsController < ApplicationController
-
   def index
+    @events = current_user.events
   end
 
   def redirect_to_google_calendar_auth
@@ -18,7 +18,9 @@ class GoogleCalendarsController < ApplicationController
   end
 
   def stop_notification_channel
-    Google::NotificationChannel.new(user_id: current_user.id).stop_event_notification_channel(session[:uuid], session[:resource_id])
+    Google::NotificationChannel.new(user_id: current_user.id).stop_event_notification_channel(
+      session[:uuid],
+      session[:resource_id])
     session[:resource_id] = nil
     session[:uuid] = nil
     redirect_to root_path
@@ -36,7 +38,7 @@ class GoogleCalendarsController < ApplicationController
         token_credential_uri: "https://accounts.google.com/o/oauth2/token",
         scope: "https://www.googleapis.com/auth/calendar",
         redirect_uri: google_authorization_url,
-        refresh_token: current_user.google_authentication.dig('refresh_token')
+        refresh_token: current_user.google_authentication.dig("refresh_token")
       }
     end
 end

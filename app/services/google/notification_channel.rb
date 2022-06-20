@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Google
   class NotificationChannel
     include Rails.application.routes.url_helpers
@@ -15,11 +17,11 @@ module Google
       uuid = SecureRandom.uuid
       channel = Google::Apis::CalendarV3::Channel.new(
         id: uuid,
-        type: 'web_hook',
+        type: "web_hook",
         address: callback_url(host: Settings.host),
         token: { user_id: user_id }.to_json
       )
-      calendar.watch_event('primary', channel)
+      calendar.watch_event("primary", channel)
     end
 
     def stop_event_notification_channel(uuid, resource_id)
@@ -44,9 +46,8 @@ module Google
           authorization_uri: "https://accounts.google.com/o/oauth2/auth",
           token_credential_uri: "https://accounts.google.com/o/oauth2/token",
           scope: "https://www.googleapis.com/auth/calendar",
-          refresh_token: User.find_by(id: user_id).google_authentication.dig('refresh_token')
+          refresh_token: User.find_by(id: user_id).google_authentication.dig("refresh_token")
         }
       end
-
   end
 end

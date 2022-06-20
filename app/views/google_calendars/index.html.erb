@@ -1,7 +1,13 @@
-<% if current_user.google_authentication.present? %>
-  <%= link_to "#{create_stop_channel_link_text} channel", create_or_stop_channel_path %>
-  <%= link_to "Revoke Google calendar access", revoke_calendar_access_path %>
-<% else %>
-  <%= link_to "Sync Google Calendar", redirect_to_google_calendar_auth_path %>
-<% end %>
-<%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?'} %>
+<div class="mx-32 my-4">
+  <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200" aria-label="Tabs">
+    <% if current_user.google_authentication.present? %>
+      <%= link_to "#{create_stop_channel_link_text} channel", create_or_stop_channel_path, class: "text-white font-semibold bg-indigo-500 group relative min-w-0 flex-1 overflow-hidden py-4 px-4 text-lg font-medium text-center focus:z-10" %>
+      <%= link_to "Revoke Google calendar access", revoke_calendar_access_path, class: "text-white font-semibold bg-indigo-500 group relative min-w-0 flex-1 overflow-hidden py-4 px-4 text-lg font-medium text-center focus:z-10" %>
+    <% else %>
+      <%= link_to "Sync Google Calendar", redirect_to_google_calendar_auth_path, class: "text-white font-semibold bg-indigo-500 group relative min-w-0 flex-1 overflow-hidden py-4 px-4 text-lg font-medium text-center focus:z-10" %>
+    <% end %>
+    <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?'}, class: "text-white font-semibold bg-indigo-500 group relative min-w-0 flex-1 overflow-hidden py-4 px-4 text-lg font-medium text-center focus:z-10" %>
+ </nav>
+</div>
+<%= render "events/events", events: @events %>
+

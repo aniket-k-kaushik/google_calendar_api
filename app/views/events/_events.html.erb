@@ -1,0 +1,41 @@
+<div class="px-4 sm:px-6 lg:px-8 mt-10">
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Google Calendar Events</h1>
+  </div>
+
+  <div class="mt-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Start Date</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">End Date</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Attendees</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Google Event ID</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+
+            <% events.each do |event| %>
+              <tr>
+                <div id="<%= event[:id] %>">
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= event.name %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= event.start_time%></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= event.end_time %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= event.attendees %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= event.google_event_id %></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= event.status %></td>
+                </div>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
