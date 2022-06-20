@@ -11,5 +11,10 @@ Rails.application.routes.draw do
   get "/redirect_to_google_calendar_auth", to: "google_calendars#redirect_to_google_calendar_auth"
 
   get "revoke_google_calendar_access", to: "google_authorizations#revoke_google_calendar_access", as: :revoke_calendar_access
+
+  get "/create_channel", to: "google_calendars#create_notification_channel"
+  get "/stop_channel", to: "google_calendars#stop_notification_channel"
+
+  post "/google/web_hook/callback", to: "google_notifications#callback", as: :callback
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end

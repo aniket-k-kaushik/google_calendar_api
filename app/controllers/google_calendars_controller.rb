@@ -6,20 +6,37 @@ class GoogleCalendarsController < ApplicationController
   end
 
   def redirect_to_google_calendar_auth
-    uri = URI("https://accounts.google.com/o/oauth2/auth")
-    uri.query = URI.encode_www_form(uri_params)
-    redirect_to uri.to_s, allow_other_host: true
+    client = Signet::OAuth2::Client.new(client_options)
+    redirect_to client.authorization_uri.to_s, allow_other_host: true
+  end
+
+  def create_notification_channel
+    response = Google::NotificationChannel.new(user_id: current_user.id).create_event_notification_channel
+    session[:resource_id] = response.resource_id
+    session[:uuid] = response.id
+    redirect_to root_path
+  end
+
+  def stop_notification_channel
+    Google::NotificationChannel.new(user_id: current_user.id).stop_event_notification_channel(session[:uuid], session[:resource_id])
+    session[:resource_id] = nil
+    session[:uuid] = nil
+    redirect_to root_path
+  rescue => e
+    render :index, notice: e.message
   end
 
   private
 
-    def uri_params
+    def client_options
       {
-        access_type: "offline",
         client_id: Rails.application.credentials.google_calendar[:client_id],
+        client_secret: Rails.application.credentials.google_calendar[:client_secret],
+        authorization_uri: "https://accounts.google.com/o/oauth2/auth",
+        token_credential_uri: "https://accounts.google.com/o/oauth2/token",
+        scope: "https://www.googleapis.com/auth/calendar",
         redirect_uri: google_authorization_url,
-        response_type: "code",
-        scope: "https://www.googleapis.com/auth/calendar"
+        refresh_token: current_user.google_authentication.dig('refresh_token')
       }
     end
 end

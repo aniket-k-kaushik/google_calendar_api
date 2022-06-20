@@ -1,1 +1,1 @@
-host: <%= ENV['HOST_URL'] %>
+host: https://fd95-2401-4900-1c33-c19c-84b1-77fb-61ac-49ec.in.ngrok.io
