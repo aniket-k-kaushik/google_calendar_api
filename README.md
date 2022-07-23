@@ -1,4 +1,4 @@
-# Timely Backend Engineer Test : Google Calendar API
+# Google Calendar API
 
 ### 1. Problem Statement
 * Timely Backend Engineer TestAs a user, I want to have my Google Calendar events for today listed on a Web interface, classified by calendar names.
